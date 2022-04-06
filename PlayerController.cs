@@ -12,13 +12,17 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] bool isWalking;
     [SerializeField] Vector2 lastDirection;
-    // string WALKING_STATE = "Walking";
+    const string WALKING_STATE = "Walking";
+    const string LH = "LastHorizontal";
+    const string LV = "LastVertical";
 
     Rigidbody2D rb;
+    Animator anim;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
     }
 
     private void Update()
@@ -39,5 +43,11 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = Vector2.zero;
         }
+
+        anim.SetBool(WALKING_STATE, isWalking);
+        anim.SetFloat(HORIZONTAL, h);
+        anim.SetFloat(VERTICAL, v);
+        anim.SetFloat(LH, lastDirection.x);
+        anim.SetFloat(LV, lastDirection.y);
     }
 }
