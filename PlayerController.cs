@@ -16,6 +16,11 @@ public class PlayerController : MonoBehaviour
     const string LH = "LastHorizontal";
     const string LV = "LastVertical";
 
+    [SerializeField] bool isAttacking = false;
+    const string ATTACKING_STATE = "Attaking";
+    [SerializeField] float attackTime;
+    float attackTimeCounter;
+
     Rigidbody2D rb;
     Animator anim;
 
@@ -32,11 +37,31 @@ public class PlayerController : MonoBehaviour
         h = Input.GetAxisRaw(HORIZONTAL);
         v = Input.GetAxisRaw(VERTICAL);
 
-        if (Mathf.Abs(h) > 0.5f || Mathf.Abs(v) > 0.5f)
+        if (Input.GetMouseButton(0))
         {
-            isWalking = true;
-            lastDirection = new Vector2(h * Time.deltaTime, v * Time.deltaTime);
-            rb.velocity = lastDirection.normalized * speed;
+            isAttacking = true;
+            attackTimeCounter = attackTime;
+            rb.velocity = Vector2.zero;
+            anim.SetBool(ATTACKING_STATE, true);
+        }
+
+        if (isAttacking)
+        {
+            attackTimeCounter -= Time.deltaTime;
+            if (attackTimeCounter < 0)
+            {
+                isAttacking = false;
+                anim.SetBool(ATTACKING_STATE, false);
+            }
+        }
+        else
+        {
+            if (Mathf.Abs(h) > 0.5f || Mathf.Abs(v) > 0.5f)
+            {
+                isWalking = true;
+                lastDirection = new Vector2(h * Time.deltaTime, v * Time.deltaTime);
+                rb.velocity = lastDirection.normalized * speed;
+            }
         }
 
         if (!isWalking)
