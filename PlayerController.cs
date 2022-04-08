@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float attackTime;
     float attackTimeCounter;
 
+    public static bool playerIsCreated;
+
     Rigidbody2D rb;
     Animator anim;
 
@@ -28,6 +30,16 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+
+        if (!playerIsCreated)
+        {
+            playerIsCreated = true;
+            DontDestroyOnLoad(transform.gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Update()
