@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
 
     public static bool playerIsCreated;
 
+    public string nextPlaceName;
+
     Rigidbody2D rb;
     Animator anim;
 
