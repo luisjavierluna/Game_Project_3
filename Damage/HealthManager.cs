@@ -11,6 +11,8 @@ public class HealthManager : MonoBehaviour
     [SerializeField] float flashLength = 2;
     float flashCounter;
 
+    [SerializeField] int exp = 10;
+
     SpriteRenderer sprite;
 
     private void Start()
@@ -25,6 +27,12 @@ public class HealthManager : MonoBehaviour
         if (currentHealth <= 0)
         {
             gameObject.SetActive(false);
+            if (gameObject.CompareTag("Enemy"))
+            {
+                GameObject.Find("Player")
+                    .GetComponent<CharacterStats>()
+                    .AddExperience(exp);
+            }
         }
 
         if (gameObject.CompareTag("Player"))
