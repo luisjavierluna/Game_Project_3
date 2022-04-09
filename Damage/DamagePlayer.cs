@@ -5,6 +5,7 @@ using UnityEngine;
 public class DamagePlayer : MonoBehaviour
 {
     [SerializeField] int damage;
+    [SerializeField] GameObject damageNumber;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -13,6 +14,10 @@ public class DamagePlayer : MonoBehaviour
             collision.gameObject
                 .GetComponent<HealthManager>()
                 .DamageCharacter(damage);
+            var clone = (GameObject)Instantiate(damageNumber,
+                                                 collision.transform.position,
+                                                 Quaternion.Euler(Vector3.zero));
+            clone.GetComponent<DamageNumber>().damagePoints = damage;
         }
     }
 }
