@@ -10,13 +10,26 @@ public class WeaponDamage : MonoBehaviour
     [SerializeField] GameObject hitPoint;
     [SerializeField] GameObject damageNumber;
 
+    CharacterStats stats;
+
+    private void Start()
+    {
+        stats = GetComponentInParent<CharacterStats>();
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy"))
         {
+            int totalDamage = damage;
+            if (stats != null)
+            {
+                totalDamage += stats.strenghLevels[stats.currentLevel];
+            }
+
             collision
                 .GetComponent<HealthManager>()
-                .DamageCharacter(damage);
+                .DamageCharacter(totalDamage);
 
             Instantiate(hurtAnimation, 
                         hitPoint.transform.position, 
@@ -24,7 +37,7 @@ public class WeaponDamage : MonoBehaviour
             var clone = (GameObject)Instantiate(damageNumber,
                                      hitPoint.transform.position,
                                      Quaternion.Euler(Vector3.zero));
-            clone.GetComponent<DamageNumber>().damagePoints = damage;
+            clone.GetComponent<DamageNumber>().damagePoints = totalDamage;
         }
     }
 }

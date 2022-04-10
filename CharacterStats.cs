@@ -4,9 +4,20 @@ using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
 {
-    [SerializeField] int currentLevel;
+    public int currentLevel;
     [SerializeField] int currentExp;
     [SerializeField] int[] expToLevelUp;
+
+    [SerializeField] int[] hpLevels;
+    public int[] strenghLevels;
+    public int[] defenseLevels;
+
+    HealthManager manager;
+
+    private void Start()
+    {
+        manager = GetComponent<HealthManager>();
+    }
 
     private void Update()
     {
@@ -18,6 +29,7 @@ public class CharacterStats : MonoBehaviour
         if (currentExp > expToLevelUp[currentLevel])
         {
             currentLevel++;
+            manager.UpdateMaxHealth(hpLevels[currentLevel]);
         }
     }
 

@@ -78,4 +78,10 @@ public class HealthManager : MonoBehaviour
                                  sprite.color.b,
                                  visible ? 1.0f : 0.0f);
     }
+
+    public void UpdateMaxHealth(int newMaxHealth)
+    {
+        maxHealth = newMaxHealth;
+        currentHealth = maxHealth;
+    }
 }
