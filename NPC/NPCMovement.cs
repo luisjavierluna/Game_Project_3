@@ -23,6 +23,7 @@ public class NPCMovement : MonoBehaviour
     int currentDirection;
 
     Rigidbody2D rb;
+    [SerializeField] BoxCollider2D villagerZone;
 
     private void Start()
     {
@@ -36,6 +37,17 @@ public class NPCMovement : MonoBehaviour
     {
         if (isWalking)
         {
+            if (villagerZone != null)
+            {
+                if (transform.position.x < villagerZone.bounds.min.x ||
+                    transform.position.x > villagerZone.bounds.max.x ||
+                    transform.position.y < villagerZone.bounds.min.y ||
+                    transform.position.y > villagerZone.bounds.max.y)
+                {
+                    StopWalking();
+                }
+            }
+
             rb.velocity = walkingDirection[currentDirection] * speed * Time.deltaTime;
             walkTimeCounter -= Time.deltaTime;
             if (walkTimeCounter < 0)
