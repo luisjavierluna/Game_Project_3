@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour
 
     public string nextPlaceName;
 
+    public bool isTalking;
+
     Rigidbody2D rb;
     Animator anim;
 
@@ -42,10 +44,17 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        isTalking = false;
     }
 
     private void Update()
     {
+        if (isTalking)
+        {
+            rb.velocity = Vector2.zero;
+            return;
+        }
+
         isWalking = false;
 
         h = Input.GetAxisRaw(HORIZONTAL);

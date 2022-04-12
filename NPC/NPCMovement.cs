@@ -22,12 +22,16 @@ public class NPCMovement : MonoBehaviour
     };
     int currentDirection;
 
+    public bool isTalking;
+    DialogManager manager;
+
     Rigidbody2D rb;
     [SerializeField] BoxCollider2D villagerZone;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        manager = FindObjectOfType<DialogManager>();
 
         walkTimeCounter = walkTime;
         stopTimeCounter = stopTime;
@@ -35,6 +39,17 @@ public class NPCMovement : MonoBehaviour
 
     private void Update()
     {
+        if (!manager.dialogActive)
+        {
+            isTalking = false;
+        }
+
+        if (isTalking)
+        {
+            StopWalking();
+        }
+
+
         if (isWalking)
         {
             if (villagerZone != null)
