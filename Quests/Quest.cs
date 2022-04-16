@@ -7,11 +7,23 @@ public class Quest : MonoBehaviour
     [SerializeField] int questID;
     [SerializeField] string initialText, finalText;
 
+    [SerializeField] bool needsItem;
+    [SerializeField] string itemName;
+
     QuestManager manager;
 
     private void Start()
     {
         manager = GetComponentInParent<QuestManager>();
+    }
+
+    private void Update()
+    {
+        if (needsItem && manager.itemCollected.Equals(itemName))
+        {
+            manager.itemCollected = null;
+            CompleteQuest();
+        }
     }
 
     public void StartQuest()
