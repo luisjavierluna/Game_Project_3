@@ -13,11 +13,15 @@ public class HealthManager : MonoBehaviour
 
     [SerializeField] int exp = 10;
 
+    public string enemyName;
+    QuestManager manager;
+
     SpriteRenderer sprite;
 
     private void Start()
     {
         sprite = GetComponent<SpriteRenderer>();
+        manager = FindObjectOfType<QuestManager>();
 
         currentHealth = maxHealth;
     }
@@ -29,6 +33,8 @@ public class HealthManager : MonoBehaviour
             gameObject.SetActive(false);
             if (gameObject.CompareTag("Enemy"))
             {
+                manager.enemyKilled = enemyName;
+
                 GameObject.Find("Player")
                     .GetComponent<CharacterStats>()
                     .AddExperience(exp);

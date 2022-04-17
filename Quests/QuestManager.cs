@@ -8,6 +8,7 @@ public class QuestManager : MonoBehaviour
     public bool[] questCompleted;
 
     public string itemCollected;
+    public string enemyKilled;
 
     DialogManager manager;
 

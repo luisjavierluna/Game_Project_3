@@ -10,6 +10,11 @@ public class Quest : MonoBehaviour
     [SerializeField] bool needsItem;
     [SerializeField] string itemName;
 
+    [SerializeField] bool needsEnemy;
+    [SerializeField] string enemyName;
+    [SerializeField] int numberOfEnemies = 5;
+    [SerializeField] int enemiesKilled;
+
     QuestManager manager;
 
     private void Start()
@@ -23,6 +28,19 @@ public class Quest : MonoBehaviour
         {
             manager.itemCollected = null;
             CompleteQuest();
+        }
+
+        if (manager.enemyKilled != null)
+        {
+            if (needsEnemy && manager.enemyKilled.Equals(enemyName))
+            {
+                manager.enemyKilled = null;
+                enemiesKilled++;
+                if (enemiesKilled >= numberOfEnemies)
+                {
+                    CompleteQuest();
+                }
+            }
         }
     }
 
